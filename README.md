@@ -13,7 +13,9 @@ APIs
     > Example
     
     > `intSlice := []{1, 2, 3}
+    
     Slice(&intSlice).Remove(1)
+    
     fmt.Println(intSlice) // the result should be [1, 3]
     `
  
