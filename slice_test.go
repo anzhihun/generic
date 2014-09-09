@@ -83,6 +83,7 @@ func TestSliceQuickSort_Struct(t *testing.T) {
 	if err = Slice(&students).QuickSort(); err != nil {
 		t.Fatal("Failed to quick sort slice contains only 2 element! error: ", err)
 	}
+
 	if len(students) != 2 || students[0].age != 12 || students[1].age != 100 {
 		t.Fatal("After quick sort slice contains only 2 element, the elements should be right and ordered!")
 	}
