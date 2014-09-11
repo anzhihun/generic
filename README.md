@@ -3,9 +3,24 @@ generic
 
 It's a Golang generic library
 
+Motivations
+-----------
+*   Golang doesn't support generics now.
+*   We need generics in projects. 
+*   There is not a thirdpart generic library now.
+*   Challenge myself.
+
+Features
+----------
+*   Remove element in slice of any type. (available now)[see](#api-slice-remove)
+*   Sort elements in slice of any type. (available now, support int8, int16, int32, int, int64, uint8, uint16, uint32, uint, uint64 and struct which contains a compare function)
+*   Find element in slice of any type. 
+*   
+
+
 APIs
 -----------
-*   Remove
+*   <a name="api-slice-remove" id="api-slice-remove">Remove</a>
     >`func (s *slice) Remove(index int) error`
  
     > Remove element of slice at index. The slice can be any type slice, include struct slice.
