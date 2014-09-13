@@ -413,3 +413,51 @@ func TestSliceQuickSort_Uint64(t *testing.T) {
 		t.Fatal("After quick sort uint64 slice contains 2 element, the elements should be right and ordered!")
 	}
 }
+
+func TestSliceQuickSort_Float32(t *testing.T) {
+	testfloat32s := []float32{}
+	err := Slice(&testfloat32s).QuickSort()
+	if err != nil {
+		t.Fatal("Quick sort should support float32 slice! error: ", err)
+	}
+
+	testfloat32s = append(testfloat32s, 12.1)
+	if err = Slice(&testfloat32s).QuickSort(); err != nil {
+		t.Fatal("Failed to quick sort float32 slice contains 1 element! error: ", err)
+	}
+	if len(testfloat32s) != 1 || testfloat32s[0] != 12.1 {
+		t.Fatal("After quick sort float32 slice contains 1 element, the elements should be right and ordered!")
+	}
+
+	testfloat32s = append(testfloat32s, 11.9)
+	if err = Slice(&testfloat32s).QuickSort(); err != nil {
+		t.Fatal("Failed to quick sort float32 slice contains 2 element! error: ", err)
+	}
+	if len(testfloat32s) != 2 || testfloat32s[0] != 11.9 || testfloat32s[1] != 12.1 {
+		t.Fatal("After quick sort float32 slice contains 2 element, the elements should be right and ordered!")
+	}
+}
+
+func TestSliceQuickSort_Float64(t *testing.T) {
+	testfloat64s := []float64{}
+	err := Slice(&testfloat64s).QuickSort()
+	if err != nil {
+		t.Fatal("Quick sort should support float64 slice! error: ", err)
+	}
+
+	testfloat64s = append(testfloat64s, 12.1)
+	if err = Slice(&testfloat64s).QuickSort(); err != nil {
+		t.Fatal("Failed to quick sort float64 slice contains 1 element! error: ", err)
+	}
+	if len(testfloat64s) != 1 || testfloat64s[0] != 12.1 {
+		t.Fatal("After quick sort float64 slice contains 1 element, the elements should be right and ordered!")
+	}
+
+	testfloat64s = append(testfloat64s, 11.9)
+	if err = Slice(&testfloat64s).QuickSort(); err != nil {
+		t.Fatal("Failed to quick sort float64 slice contains 2 element! error: ", err)
+	}
+	if len(testfloat64s) != 2 || testfloat64s[0] != 11.9 || testfloat64s[1] != 12.1 {
+		t.Fatal("After quick sort float64 slice contains 2 element, the elements should be right and ordered!")
+	}
+}

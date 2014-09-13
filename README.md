@@ -13,7 +13,7 @@ Motivations
 Features
 ----------
 *   Remove element in slice of any type. (available now) [API](#api-slice-remove)
-*   Sort elements in slice of any type. (available now, support int8, int16, int32, int, int64, uint8, uint16, uint32, uint, uint64 and struct which contains a compare function) [API](#api-slice-quicksort)
+*   Sort elements in slice of any type. (available now, support int8, int16, int32, int, int64, uint8, uint16, uint32, uint, uint64, float32, float64 and struct which contains a compare function) [API](#api-slice-quicksort)
 *   Find element in slice of any type. 
 *   
 

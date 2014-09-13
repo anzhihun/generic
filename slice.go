@@ -118,6 +118,10 @@ func checkTypeOfSort(elem reflect.Value, funcName string) error {
 	case reflect.Uint32:
 		fallthrough
 	case reflect.Uint64:
+		fallthrough
+	case reflect.Float32:
+		fallthrough
+	case reflect.Float64:
 		break
 	default:
 		fmt.Println(elem.Type().Kind())
@@ -234,6 +238,28 @@ func compare(val1, val2 reflect.Value, compareFuncName string) int {
 	case reflect.Uint64:
 		v1 := val1.Interface().(uint64)
 		v2 := val2.Interface().(uint64)
+		if v1 < v2 {
+			return -1
+		} else if v1 == v2 {
+			return 0
+		} else {
+			return 1
+		}
+		break
+	case reflect.Float32:
+		v1 := val1.Interface().(float32)
+		v2 := val2.Interface().(float32)
+		if v1 < v2 {
+			return -1
+		} else if v1 == v2 {
+			return 0
+		} else {
+			return 1
+		}
+		break
+	case reflect.Float64:
+		v1 := val1.Interface().(float64)
+		v2 := val2.Interface().(float64)
 		if v1 < v2 {
 			return -1
 		} else if v1 == v2 {
