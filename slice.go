@@ -17,7 +17,7 @@ func Slice(slicePtr interface{}) *slice {
 }
 
 // Remove element at index of slice
-func (s *slice) Remove(index int) error {
+func (s *slice) RemoveAt(index int) error {
 	err := s.checkSlice()
 	if err != nil {
 		return err

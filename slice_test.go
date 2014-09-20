@@ -20,45 +20,45 @@ func (s student) Compare(other student) int {
 	}
 }
 
-func TestSliceRemove(t *testing.T) {
+func TestSliceRemoveAt(t *testing.T) {
 	values := []byte{1, 2, 3}
-	err := Slice(&values).Remove(0)
+	err := Slice(&values).RemoveAt(0)
 	if err != nil || len(values) != 2 || values[0] != 2 || values[1] != 3 {
-		t.Fatal("Failed to remove first item!")
+		t.Fatal("Failed to RemoveAt first item!")
 	}
 
 	values2 := []byte{1, 2, 3}
-	err = Slice(&values2).Remove(2)
+	err = Slice(&values2).RemoveAt(2)
 	if err != nil || len(values2) != 2 || values2[0] != 1 || values2[1] != 2 {
-		t.Fatal("Failed to remove last item!")
+		t.Fatal("Failed to RemoveAt last item!")
 	}
 
 	values3 := []byte{1, 2, 3}
-	err = Slice(&values3).Remove(1)
+	err = Slice(&values3).RemoveAt(1)
 	if err != nil || len(values3) != 2 || values3[0] != 1 || values3[1] != 3 {
-		t.Fatal("Failed to remove middle item!")
+		t.Fatal("Failed to RemoveAtAt middle item!")
 	}
 
 	values4 := []byte{1, 2, 3}
-	err = Slice(&values4).Remove(3)
+	err = Slice(&values4).RemoveAt(3)
 	if err == nil {
 		t.Fatal("It should be error when removing out of range item!")
 	}
 
 	values5 := []byte{1, 2, 3}
-	err = Slice(values5).Remove(1)
+	err = Slice(values5).RemoveAt(1)
 	if err == nil {
 		t.Fatal("It should be error when the parameter is slice!")
 	}
 
 	values6 := [3]byte{1, 2, 3}
-	err = Slice(&values6).Remove(1)
+	err = Slice(&values6).RemoveAt(1)
 	if err == nil {
 		t.Fatal("It should be error when the parameter is array pointer!")
 	}
 
 	values7 := string("test")
-	err = Slice(&values7).Remove(1)
+	err = Slice(&values7).RemoveAt(1)
 	if err == nil {
 		t.Fatal("It should be error when the parameter is string!")
 	}
