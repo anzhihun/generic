@@ -12,7 +12,7 @@ Motivations
 
 Features
 ----------
-*   Remove element in slice of any type. (available now) API[RemoveAt](#api-slice-removeAt) [Remove](#api-slice-remove)
+*   Remove element in slice of any type. (available now) API[RemoveAt](#api-slice-removeAt) [Remove](#api-slice-remove) [RemoveBy](#api-slice-removeBy)
 *   Sort elements in slice of any type. (available now, support int8, int16, int32, int, int64, uint8, uint16, uint32, uint, uint64, float32, float64 and struct which contains a compare function) [API](#api-slice-quicksort)
 *   Find element in slice of any type. 
 *   
@@ -45,7 +45,23 @@ APIs
     >Slice(&byteSlice).Remove(byte(1))
     >fmt.Println(byteSlice) // the result should be [2, 3]
     >```
+
+*   <a name="api-slice-removeBy" id="api-slice-removeBy">RemoveBy</a>
+    >`func (s *slice) RemoveBy(equalFunc func(interface{}) bool) error`
+ 
+    > Remove element of slice when equalFunc return true. The slice can be any type slice, include struct slice. 
     
+    > Example
+    
+    >```
+    >values := []byte{1, 2, 3}
+    >err := Slice(&values).RemoveBy(func(value interface{}) bool {
+    >    elem := value.(byte)
+    >    return elem == byte(1)
+    >})
+    >fmt.Println(byteSlice) // the result should be [2, 3]
+    >```
+
 *   <a name="api-slice-quicksort" id="api-slice-quicksort">QuickSort</a>
     >`func (s *slice) QuickSort() error `
  
