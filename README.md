@@ -47,9 +47,9 @@ APIs
     >```
 
 *   <a name="api-slice-removeBy" id="api-slice-removeBy">RemoveBy</a>
-    >`func (s *slice) RemoveBy(equalFunc func(interface{}) bool) error`
+    >`func (s *slice) RemoveBy(equal func(interface{}) bool) error`
  
-    > Remove element of slice when equalFunc return true. The slice can be any type slice, include struct slice. 
+    > Remove element of slice when equal function return true. The slice can be any type slice, include struct slice. 
     
     > Example
     

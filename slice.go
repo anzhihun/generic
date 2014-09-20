@@ -55,8 +55,8 @@ func (s *slice) Remove(elem interface{}) error {
 	return nil
 }
 
-// Remove element of slice when equalFunc return true
-func (s *slice) RemoveBy(equalFunc func(interface{}) bool) error {
+// Remove element of slice when equal function return true
+func (s *slice) RemoveBy(equal func(interface{}) bool) error {
 	err := s.checkSlice()
 	if err != nil {
 		return err
@@ -69,7 +69,7 @@ func (s *slice) RemoveBy(equalFunc func(interface{}) bool) error {
 	}
 
 	for index := 0; index < sliceValue.Len(); index++ {
-		if equalFunc(sliceValue.Index(index).Interface()) {
+		if equal(sliceValue.Index(index).Interface()) {
 			s.RemoveAt(index)
 			return nil
 		}
