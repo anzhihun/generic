@@ -86,6 +86,30 @@ func TestSliceRemove(t *testing.T) {
 	}
 }
 
+func TestSliceRemoveBy(t *testing.T) {
+	values := []byte{1, 2, 3}
+	err := Slice(&values).RemoveBy(func(value interface{}) bool {
+		elem := value.(byte)
+		return elem == byte(1)
+	})
+
+	if err != nil || len(values) != 2 || values[0] != 2 || values[1] != 3 {
+		t.Fatal("Failed to remove first item through RemoveBy!")
+	}
+
+	students := []student{}
+	students = append(students, student{name: "1", age: 100})
+	students = append(students, student{name: "2", age: 100})
+	students = append(students, student{name: "3", age: 100})
+	err = Slice(&students).RemoveBy(func(value interface{}) bool {
+		elem := value.(student)
+		return elem.name == "3"
+	})
+	if err != nil || len(values) != 2 || students[0].name != "1" || students[1].name != "2" {
+		t.Fatal("failed to remove struct from slice through RemoveBy!")
+	}
+}
+
 func TestSliceQuickSort_Struct(t *testing.T) {
 	students := []student{}
 	err := Slice(&students).QuickSort()
