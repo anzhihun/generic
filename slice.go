@@ -32,6 +32,29 @@ func (s *slice) RemoveAt(index int) error {
 	return nil
 }
 
+// Remove element at index of slice
+func (s *slice) Remove(elem interface{}) error {
+	err := s.checkSlice()
+	if err != nil {
+		return err
+	}
+
+	slicePtrValue := reflect.ValueOf(s.slicePtr)
+	sliceValue := slicePtrValue.Elem()
+	if sliceValue.Len() <= 0 {
+		return nil
+	}
+
+	for index := 0; index < sliceValue.Len(); index++ {
+		if reflect.DeepEqual(sliceValue.Index(index).Interface(), elem) {
+			s.RemoveAt(index)
+			return nil
+		}
+	}
+
+	return nil
+}
+
 func (s *slice) checkSlice() error {
 	if s.slicePtr == nil {
 		return errors.New("slice is nil!")

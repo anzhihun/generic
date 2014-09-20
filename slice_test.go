@@ -64,6 +64,28 @@ func TestSliceRemoveAt(t *testing.T) {
 	}
 }
 
+func TestSliceRemove(t *testing.T) {
+	values := []byte{1, 2, 3}
+	err := Slice(&values).Remove(byte(1))
+	if err != nil || len(values) != 2 || values[0] != 2 || values[1] != 3 {
+		t.Fatal("Failed to Remove first item!")
+	}
+
+	err = Slice(&values).Remove(int(2))
+	if err != nil && len(values) == 1 {
+		t.Fatal("should not remove byte value by int value!")
+	}
+
+	students := []student{}
+	students = append(students, student{name: "1", age: 100})
+	students = append(students, student{name: "2", age: 100})
+	students = append(students, student{name: "3", age: 100})
+	err = Slice(&students).Remove(student{name: "3", age: 100})
+	if err != nil || len(values) != 2 || students[0].name != "1" || students[1].name != "2" {
+		t.Fatal("failed to remove struct from slice!")
+	}
+}
+
 func TestSliceQuickSort_Struct(t *testing.T) {
 	students := []student{}
 	err := Slice(&students).QuickSort()
