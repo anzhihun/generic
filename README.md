@@ -12,7 +12,7 @@ Motivations
 
 Features
 ----------
-*   Remove element in slice of any type. (available now) [API](#api-slice-removeAt)
+*   Remove element in slice of any type. (available now) API[RemoveAt](#api-slice-removeAt) [Remove](#api-slice-remove)
 *   Sort elements in slice of any type. (available now, support int8, int16, int32, int, int64, uint8, uint16, uint32, uint, uint64, float32, float64 and struct which contains a compare function) [API](#api-slice-quicksort)
 *   Find element in slice of any type. 
 *   
@@ -20,7 +20,7 @@ Features
 
 APIs
 -----------
-*   <a name="api-slice-removeAt" id="api-slice-remove">RemoveAt</a>
+*   <a name="api-slice-removeAt" id="api-slice-removeAt">RemoveAt</a>
     >`func (s *slice) RemoveAt(index int) error`
  
     > Remove element of slice at index. The slice can be any type slice, include struct slice.
@@ -31,6 +31,19 @@ APIs
     >intSlice := []int{1, 2, 3}
     >Slice(&intSlice).RemoveAt(1)
     >fmt.Println(intSlice) // the result should be [1, 3]
+    >```
+
+*   <a name="api-slice-remove" id="api-slice-remove">Remove</a>
+    >`func (s *slice) Remove(elem interface{}) error`
+ 
+    > Remove element of slice. The slice can be any type slice, include struct slice. The parameter `elem` is contained by slice.
+    
+    > Example
+    
+    >```
+    >byteSlice := []byte{1, 2, 3}
+    >Slice(&byteSlice).Remove(byte(1))
+    >fmt.Println(byteSlice) // the result should be [2, 3]
     >```
     
 *   <a name="api-slice-quicksort" id="api-slice-quicksort">QuickSort</a>
