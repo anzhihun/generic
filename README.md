@@ -12,7 +12,7 @@ Motivations
 
 Features
 ----------
-*   Remove element in slice of any type. (available now) [API](#api-slice-remove)
+*   Remove element in slice of any type. (available now) [API](#api-slice-removeAt)
 *   Sort elements in slice of any type. (available now, support int8, int16, int32, int, int64, uint8, uint16, uint32, uint, uint64, float32, float64 and struct which contains a compare function) [API](#api-slice-quicksort)
 *   Find element in slice of any type. 
 *   
@@ -20,8 +20,8 @@ Features
 
 APIs
 -----------
-*   <a name="api-slice-remove" id="api-slice-remove">Remove</a>
-    >`func (s *slice) Remove(index int) error`
+*   <a name="api-slice-removeAt" id="api-slice-remove">RemoveAt</a>
+    >`func (s *slice) RemoveAt(index int) error`
  
     > Remove element of slice at index. The slice can be any type slice, include struct slice.
     
@@ -29,7 +29,7 @@ APIs
     
     >```
     >intSlice := []int{1, 2, 3}
-    >Slice(&intSlice).Remove(1)
+    >Slice(&intSlice).RemoveAt(1)
     >fmt.Println(intSlice) // the result should be [1, 3]
     >```
     
