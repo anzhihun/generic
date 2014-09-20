@@ -110,6 +110,32 @@ func TestSliceRemoveBy(t *testing.T) {
 	}
 }
 
+func TestSliceForEach(t *testing.T) {
+	values := []byte{1, 2, 3}
+	sum := 0
+	err := Slice(&values).ForEach(func(value interface{}, index int) {
+		elem := value.(byte)
+		sum = sum + int(elem)
+	})
+
+	if err != nil || sum != 6 {
+		t.Fatal("Failed to iterate element of slice!")
+	}
+}
+
+func TestSliceEach(t *testing.T) {
+	values := []byte{1, 2, 3}
+	sum := 0
+	err := Slice(&values).Each(func(value interface{}, index int) {
+		elem := value.(byte)
+		sum = sum + int(elem)
+	})
+
+	if err != nil || sum != 6 {
+		t.Fatal("Failed to iterate element of slice!")
+	}
+}
+
 func TestSliceQuickSort_Struct(t *testing.T) {
 	students := []student{}
 	err := Slice(&students).QuickSort()

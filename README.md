@@ -13,6 +13,7 @@ Motivations
 Features
 ----------
 *   Remove element in slice of any type. (available now) API[RemoveAt](#api-slice-removeAt) [Remove](#api-slice-remove) [RemoveBy](#api-slice-removeBy)
+*   Iterate elements in slice. API [Each](#api-slice-each) [ForEach](#api-slice-forEach)
 *   Sort elements in slice of any type. (available now, support int8, int16, int32, int, int64, uint8, uint16, uint32, uint, uint64, float32, float64 and struct which contains a compare function) [API](#api-slice-quicksort)
 *   Find element in slice of any type. 
 *   
@@ -60,6 +61,40 @@ APIs
     >    return elem == byte(1)
     >})
     >fmt.Println(byteSlice) // the result should be [2, 3]
+    >```
+
+*   <a name="api-slice-each" id="api-slice-each">Each</a>
+    >`func (s *slice) Each(iterate func(interface{}, int)) error`
+ 
+    > Iterate to each element in slice. And then you can do anything in iterate function. The slice can be any type slice, include struct slice. 
+    
+    > Example
+    
+    >```
+    >values := []byte{1, 2, 3}
+    >sum := 0
+    >err := Slice(&values).Each(func(value interface{}, index int) {
+    >    elem := value.(byte)
+    >    sum = sum + int(elem)
+    >})
+    >fmt.Println(sum) // the result should be 6
+    >```
+
+*   <a name="api-slice-forEach" id="api-slice-forEach">ForEach</a>
+    >`func (s *slice) ForEach(iterate func(interface{}, int)) error`
+ 
+    > Iterate to each element in slice. It is same as Each. The slice can be any type slice, include struct slice. 
+    
+    > Example
+    
+    >```
+    >values := []byte{1, 2, 3}
+    >sum := 0
+    >err := Slice(&values).ForEach(func(value interface{}, index int) {
+    >    elem := value.(byte)
+    >    sum = sum + int(elem)
+    >})
+    >fmt.Println(sum) // the result should be 6
     >```
 
 *   <a name="api-slice-quicksort" id="api-slice-quicksort">QuickSort</a>

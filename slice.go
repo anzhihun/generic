@@ -78,6 +78,31 @@ func (s *slice) RemoveBy(equal func(interface{}) bool) error {
 	return nil
 }
 
+// Iterate to each element in slice. And then you can do anything in iterate function.
+func (s *slice) ForEach(iterate func(interface{}, int)) error {
+	err := s.checkSlice()
+	if err != nil {
+		return err
+	}
+
+	slicePtrValue := reflect.ValueOf(s.slicePtr)
+	sliceValue := slicePtrValue.Elem()
+	if sliceValue.Len() <= 0 {
+		return nil
+	}
+
+	for index := 0; index < sliceValue.Len(); index++ {
+		iterate(sliceValue.Index(index).Interface(), index)
+	}
+
+	return nil
+}
+
+// Iterate to each element in slice. It is same as ForEach
+func (s *slice) Each(iterate func(interface{}, int)) error {
+	return s.ForEach(iterate)
+}
+
 func (s *slice) checkSlice() error {
 	if s.slicePtr == nil {
 		return errors.New("slice is nil!")
