@@ -268,69 +268,34 @@ func clone(value reflect.Value) reflect.Value {
 // if value < 0, va1 is less than val2,
 // if value > 0, va1 is greater than val2.
 func compare(val1, val2 reflect.Value, compareFuncName string) int {
-
 	switch val1.Type().Kind() {
 	case reflect.Int8:
-		return int(val1.Interface().(int8)) - int(val2.Interface().(int8))
-		break
+		fallthrough
 	case reflect.Int16:
-		return int(val1.Interface().(int16)) - int(val2.Interface().(int16))
-		break
+		fallthrough
 	case reflect.Int32:
-		return int(val1.Interface().(int32)) - int(val2.Interface().(int32))
-		break
+		fallthrough
 	case reflect.Int64:
-		v1 := val1.Interface().(int64)
-		v2 := val2.Interface().(int64)
-		if v1 < v2 {
-			return -1
-		} else if v1 == v2 {
-			return 0
-		} else {
-			return 1
-		}
-		break
-
+		fallthrough
 	case reflect.Int:
-		return val1.Interface().(int) - val2.Interface().(int)
+		return int(val1.Int() - val2.Int())
 		break
 	case reflect.Uint:
-		return int(val1.Interface().(uint)) - int(val2.Interface().(uint))
-		break
+		fallthrough
 	case reflect.Uint8:
-		return int(val1.Interface().(uint8)) - int(val2.Interface().(uint8))
-		break
+		fallthrough
 	case reflect.Uint16:
-		return int(val1.Interface().(uint16)) - int(val2.Interface().(uint16))
-		break
+		fallthrough
 	case reflect.Uint32:
-		return int(val1.Interface().(uint32)) - int(val2.Interface().(uint32))
-		break
+		fallthrough
 	case reflect.Uint64:
-		v1 := val1.Interface().(uint64)
-		v2 := val2.Interface().(uint64)
-		if v1 < v2 {
-			return -1
-		} else if v1 == v2 {
-			return 0
-		} else {
-			return 1
-		}
+		return int(val1.Uint() - val2.Uint())
 		break
 	case reflect.Float32:
-		v1 := val1.Interface().(float32)
-		v2 := val2.Interface().(float32)
-		if v1 < v2 {
-			return -1
-		} else if v1 == v2 {
-			return 0
-		} else {
-			return 1
-		}
-		break
+		fallthrough
 	case reflect.Float64:
-		v1 := val1.Interface().(float64)
-		v2 := val2.Interface().(float64)
+		v1 := val1.Float()
+		v2 := val2.Float()
 		if v1 < v2 {
 			return -1
 		} else if v1 == v2 {
