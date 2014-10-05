@@ -252,8 +252,8 @@ func quickSort(slice reflect.Value, lowIndex, highIndex int, compareFuncName str
 		swap(slice, firstIndex, lastIndex)
 	}
 
-	quickSort(slice, lowIndex, firstIndex-1, compareFuncName)
-	quickSort(slice, lastIndex+1, highIndex, compareFuncName)
+	go quickSort(slice, lowIndex, firstIndex-1, compareFuncName)
+	go quickSort(slice, lastIndex+1, highIndex, compareFuncName)
 }
 
 func clone(value reflect.Value) reflect.Value {
@@ -306,7 +306,7 @@ func compare(val1, val2 reflect.Value, compareFuncName string) int {
 		break
 	default:
 		compareFuncValue := val1.MethodByName(compareFuncName)
-		return compareFuncValue.Call([]reflect.Value{val2})[0].Interface().(int)
+		return int(compareFuncValue.Call([]reflect.Value{val2})[0].Int())
 	}
 
 	return 0
