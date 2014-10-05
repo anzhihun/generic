@@ -14,7 +14,7 @@ Features
 ----------
 *   Remove element in slice of any type. (available now) API: [RemoveAt](#api-slice-removeAt) [Remove](#api-slice-remove) [RemoveBy](#api-slice-removeBy)
 *   Iterate elements in slice. API: [Each](#api-slice-each) [ForEach](#api-slice-forEach)
-*   Sort elements in slice of any type. (available now, support int8, int16, int32, int, int64, uint8, uint16, uint32, uint, uint64, float32, float64 and struct which contains a compare function) API: [QuickSort](#api-slice-quicksort)
+*   Sort elements in slice of any type. (available now, support int8, int16, int32, int, int64, uint8, uint16, uint32, uint, uint64, float32, float64 and struct which contains a compare function) API: [QuickSort](#api-slice-quicksort) [QuickSortBy](#api-slice-quicksortBy) 
 *   Find element in slice of any type. API: [Find](#api-slice-find) [FindBy](#api-slice-findBy)
 
 
@@ -146,6 +146,30 @@ APIs
     >students = append(students, student{1})
     >students = append(students, student{5})
     >Slice(&students).QuickSort()
+    >fmt.Println(students) // the result should be [{1} {3} {5}]
+    >```
+    
+*   <a name="api-slice-quicksortBy" id="api-slice-quicksortBy">QuickSortBy</a>
+    >`func (s *slice) QuickSortBy(compareFuncName string) error `
+ 
+    > It is the same as QuickSort function. And you can decide the compare function by the parameter `compareFuncName` which is contained by the element in slice.
+    
+    > Example
+    
+    >```
+    >type student struct {
+    >   age int
+    >}
+    >
+    >func (s student) CompareByAge(other student) int {
+    >   return s.age - other.age
+    >}
+    >
+    >students := []student{}
+    >students = append(students, student{3})
+    >students = append(students, student{1})
+    >students = append(students, student{5})
+    >Slice(&students).QuickSortBy("CompareByAge")
     >fmt.Println(students) // the result should be [{1} {3} {5}]
     >```
  
