@@ -20,6 +20,16 @@ func (s student) Compare(other student) int {
 	}
 }
 
+func (s student) CompareByAge(other student) int {
+	if s.age < other.age {
+		return -1
+	} else if s.age == other.age {
+		return 0
+	} else {
+		return 1
+	}
+}
+
 func TestSliceRemoveAt(t *testing.T) {
 	values := []byte{1, 2, 3}
 	err := Slice(&values).RemoveAt(0)
@@ -110,6 +120,52 @@ func TestSliceRemoveBy(t *testing.T) {
 	}
 }
 
+func TestSliceFind(t *testing.T) {
+	values := []byte{1, 2, 3}
+	index, err := Slice(&values).Find(byte(1))
+	if err != nil || index != 0 {
+		t.Fatal("Failed to find first item!")
+	}
+
+	index, err = Slice(&values).Find(int(2))
+	if err != nil && index != -1 {
+		t.Fatal("should not find byte value by int value!")
+	}
+
+	students := []student{}
+	students = append(students, student{name: "1", age: 100})
+	students = append(students, student{name: "2", age: 100})
+	students = append(students, student{name: "3", age: 100})
+	index, err = Slice(&students).Find(student{name: "3", age: 100})
+	if err != nil || index != 2 {
+		t.Fatal("failed to find struct from slice!")
+	}
+}
+
+func TestSliceFindBy(t *testing.T) {
+	values := []byte{1, 2, 3}
+	index, err := Slice(&values).FindBy(func(value interface{}) bool {
+		elem := value.(byte)
+		return elem == byte(1)
+	})
+
+	if err != nil || index != 0 {
+		t.Fatal("Failed to find first item through FindBy!")
+	}
+
+	students := []student{}
+	students = append(students, student{name: "1", age: 100})
+	students = append(students, student{name: "2", age: 100})
+	students = append(students, student{name: "3", age: 100})
+	index, err = Slice(&students).FindBy(func(value interface{}) bool {
+		elem := value.(student)
+		return elem.name == "3"
+	})
+	if err != nil || index != 2 {
+		t.Fatal("failed to find struct from slice through FindBy!")
+	}
+}
+
 func TestSliceForEach(t *testing.T) {
 	values := []byte{1, 2, 3}
 	sum := 0
@@ -197,7 +253,7 @@ func TestSliceQuickSort_Struct(t *testing.T) {
 		t.Fatal("Failed to quick sort reverse order slice! error: ", err)
 	}
 
-	count := len(students)
+	count := len(students3)
 	for i := 0; i < count; i++ {
 		if students3[i].age != i {
 			t.Fatal("After quick sort reverse order slice, the elements should be right and ordered! actual: ", students3)
@@ -532,4 +588,30 @@ func TestSliceQuickSort_Float64(t *testing.T) {
 	if len(testfloat64s) != 2 || testfloat64s[0] != 11.9 || testfloat64s[1] != 12.1 {
 		t.Fatal("After quick sort float64 slice contains 2 element, the elements should be right and ordered!")
 	}
+}
+
+func TestSliceQuickSortBy(t *testing.T) {
+	students := []student{}
+	students = append(students, student{name: "3", age: 15})
+	students = append(students, student{name: "4", age: 14})
+	students = append(students, student{name: "5", age: 11})
+	students = append(students, student{name: "6", age: 22})
+	students = append(students, student{name: "7", age: 4})
+
+	if err := Slice(&students).QuickSortBy("CompareByAge"); err != nil {
+		t.Fatal("Failed to quick sort slice by CompareByAge contains many elements! error: ", err)
+	}
+	for i := 0; i < len(students)-2; i++ {
+		if students[i].age > students[i+1].age {
+			t.Fatal("After quick sort slice by CompareByAge contains many elements, the elements should be right and ordered! actual: ", students)
+		}
+	}
+}
+
+func BenchmarkSliceQuickSort_Ints(b *testing.B) {
+	values := []int{}
+	for i := 100000; i >= 0; i-- {
+		values = append(values, i)
+	}
+	Slice(&values).QuickSort()
 }

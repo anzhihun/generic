@@ -15,7 +15,7 @@ Features
 *   Remove element in slice of any type. (available now) API: [RemoveAt](#api-slice-removeAt) [Remove](#api-slice-remove) [RemoveBy](#api-slice-removeBy)
 *   Iterate elements in slice. API: [Each](#api-slice-each) [ForEach](#api-slice-forEach)
 *   Sort elements in slice of any type. (available now, support int8, int16, int32, int, int64, uint8, uint16, uint32, uint, uint64, float32, float64 and struct which contains a compare function) API: [QuickSort](#api-slice-quicksort)
-*   Find element in slice of any type. 
+*   Find element in slice of any type. API: [Find](#api-slice-find) [FindBy](#api-slice-findBy)
 
 
 APIs
@@ -60,6 +60,35 @@ APIs
     >    return elem == byte(1)
     >})
     >fmt.Println(byteSlice) // the result should be [2, 3]
+    >```
+
+*   <a name="api-slice-find" id="api-slice-find">Find</a>
+    >`func (s *slice) Find(elem interface{}) (int, error)`
+ 
+    > Find element of slice. The parameter `elem` is contained by slice. Return -1 if not find, otherwise return the index of element in slice. It is available to any type slice, include struct slice. 
+    
+    > Example
+    
+    >```
+    >byteSlice := []byte{1, 2, 3}
+    >index, err := Slice(&byteSlice).Find(byte(1))
+    >fmt.Println(index) // the result should be 0
+    >```
+
+*   <a name="api-slice-findBy" id="api-slice-findBy">FindBy</a>
+    >`func (s *slice) FindBy(equal func(interface{}) bool) (int, error) `
+ 
+    > Find element of slice when equal function return true. Return -1 if not find, otherwise return the index of element in slice. It is available to any type slice, include struct slice. 
+    
+    > Example
+    
+    >```
+    >values := []byte{1, 2, 3}
+    >index, err := Slice(&values).FindBy(func(value interface{}) bool {
+    >    elem := value.(byte)
+    >    return elem == byte(1)
+    >})
+    >fmt.Println(index) // the result should be 0
     >```
 
 *   <a name="api-slice-each" id="api-slice-each">Each</a>

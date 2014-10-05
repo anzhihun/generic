@@ -34,22 +34,14 @@ func (s *slice) RemoveAt(index int) error {
 
 // Remove element of slice
 func (s *slice) Remove(elem interface{}) error {
-	err := s.checkSlice()
+
+	index, err := s.Find(elem)
 	if err != nil {
 		return err
 	}
 
-	slicePtrValue := reflect.ValueOf(s.slicePtr)
-	sliceValue := slicePtrValue.Elem()
-	if sliceValue.Len() <= 0 {
-		return nil
-	}
-
-	for index := 0; index < sliceValue.Len(); index++ {
-		if reflect.DeepEqual(sliceValue.Index(index).Interface(), elem) {
-			s.RemoveAt(index)
-			return nil
-		}
+	if index != -1 {
+		return s.RemoveAt(index)
 	}
 
 	return nil
@@ -57,25 +49,60 @@ func (s *slice) Remove(elem interface{}) error {
 
 // Remove element of slice when equal function return true
 func (s *slice) RemoveBy(equal func(interface{}) bool) error {
-	err := s.checkSlice()
+	index, err := s.FindBy(equal)
 	if err != nil {
 		return err
+	}
+
+	if index != -1 {
+		return s.RemoveAt(index)
+	}
+
+	return nil
+}
+
+// Find element of slice
+func (s *slice) Find(elem interface{}) (int, error) {
+	err := s.checkSlice()
+	if err != nil {
+		return -1, err
 	}
 
 	slicePtrValue := reflect.ValueOf(s.slicePtr)
 	sliceValue := slicePtrValue.Elem()
 	if sliceValue.Len() <= 0 {
-		return nil
+		return -1, nil
+	}
+
+	for index := 0; index < sliceValue.Len(); index++ {
+		if reflect.DeepEqual(sliceValue.Index(index).Interface(), elem) {
+			return index, nil
+		}
+	}
+
+	return -1, nil
+}
+
+// Find element of slice when equal function return true
+func (s *slice) FindBy(equal func(interface{}) bool) (int, error) {
+	err := s.checkSlice()
+	if err != nil {
+		return -1, err
+	}
+
+	slicePtrValue := reflect.ValueOf(s.slicePtr)
+	sliceValue := slicePtrValue.Elem()
+	if sliceValue.Len() <= 0 {
+		return -1, nil
 	}
 
 	for index := 0; index < sliceValue.Len(); index++ {
 		if equal(sliceValue.Index(index).Interface()) {
-			s.RemoveAt(index)
-			return nil
+			return index, nil
 		}
 	}
 
-	return nil
+	return -1, nil
 }
 
 // Iterate to each element in slice. And then you can do anything in iterate function.
@@ -252,8 +279,8 @@ func quickSort(slice reflect.Value, lowIndex, highIndex int, compareFuncName str
 		swap(slice, firstIndex, lastIndex)
 	}
 
-	go quickSort(slice, lowIndex, firstIndex-1, compareFuncName)
-	go quickSort(slice, lastIndex+1, highIndex, compareFuncName)
+	quickSort(slice, lowIndex, firstIndex-1, compareFuncName)
+	quickSort(slice, lastIndex+1, highIndex, compareFuncName)
 }
 
 func clone(value reflect.Value) reflect.Value {
