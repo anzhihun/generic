@@ -49,7 +49,7 @@ APIs
 *   <a name="api-slice-removeBy" id="api-slice-removeBy">RemoveBy</a>
     >`func (s *slice) RemoveBy(equal func(interface{}) bool) error`
  
-    > Remove element of slice when equal function return true. The slice can be any type slice, include struct slice. 
+    > Remove element of slice when `equal` function return true. The slice can be any type slice, include struct slice. 
     
     > Example
     
@@ -78,7 +78,7 @@ APIs
 *   <a name="api-slice-findBy" id="api-slice-findBy">FindBy</a>
     >`func (s *slice) FindBy(equal func(interface{}) bool) (int, error) `
  
-    > Find element of slice when equal function return true. Return -1 if not find, otherwise return the index of element in slice. It is available to any type slice, include struct slice. 
+    > Find element of slice when `equal` function return true. Return -1 if not find, otherwise return the index of element in slice. It is available to any type slice, include struct slice. 
     
     > Example
     
